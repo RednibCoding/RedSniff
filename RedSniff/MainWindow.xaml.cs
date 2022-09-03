@@ -30,8 +30,10 @@ namespace RedSniff
     {
         PacketSniffer? _packetSniffer;
         public ObservableCollection<PacketEntry> ListItems = new ObservableCollection<PacketEntry>();
-        bool showLineNumbers = true;
-        bool showTextRepresentation = true;
+        bool _showLineNumbers = true;
+        bool _showTextRepresentation = true;
+        bool _showHeader = true;
+        PacketEntry? _selectedPacketEntry;
 
         public MainWindow()
         {
@@ -52,6 +54,7 @@ namespace RedSniff
 
             btnShowLineNumbers.Click += btnShowLineNumbers_Click;
             btnShowText.Click += btnShowText_Click;
+            btnShowHeader.Click += btnShowHead_Click;
 
             dataGrid.ItemsSource = ListItems;
 
@@ -69,22 +72,17 @@ namespace RedSniff
             var row = dataGrid.SelectedItem as PacketEntry;
             if (row != null)
             {
-                DataEncoding encoding;
-                Enum.TryParse(cmbEncoding.Text, out encoding);
-                dataTextBox.Text = row.DumpData(encoding, showLineNumbers, showTextRepresentation);
+                _selectedPacketEntry = row;
+                if (_selectedPacketEntry != null)
+                    makeDataOutput(cmbEncoding.Text);
             }
         }
 
         void cmbEncoding_Changed(object sender, RoutedEventArgs e)
         {
-            var row = dataGrid.SelectedItem as PacketEntry;
-            if (row != null && sender != null)
-            {
-                DataEncoding encoding;
-                var selectedItemStr = (sender as ComboBox)!.SelectedItem as string;
-                Enum.TryParse(selectedItemStr, out encoding);
-                dataTextBox.Text = row.DumpData(encoding, showLineNumbers, showTextRepresentation);
-            }
+            var selectedItemStr = (sender as ComboBox)!.SelectedItem as string;
+            if (selectedItemStr != null && _selectedPacketEntry != null)
+                makeDataOutput(selectedItemStr);
         }
 
         void btnStop_Click(object sender, RoutedEventArgs e)
@@ -110,33 +108,28 @@ namespace RedSniff
 
         void btnShowLineNumbers_Click(object sender, RoutedEventArgs e)
         {
-            showLineNumbers = showLineNumbers == true ? false : true;
-
-            var row = dataGrid.SelectedItem as PacketEntry;
-            if (row != null && sender != null)
-            {
-                DataEncoding encoding;
-                Enum.TryParse(cmbEncoding.Text, out encoding);
-                dataTextBox.Text = row.DumpData(encoding, showLineNumbers, showTextRepresentation);
-            }
+            _showLineNumbers = _showLineNumbers == true ? false : true;
+            if (_selectedPacketEntry != null)
+                makeDataOutput(cmbEncoding.Text);
+            
         }
 
         void btnShowText_Click(object sender, RoutedEventArgs e)
         {
-            showTextRepresentation = showTextRepresentation == true ? false : true;
+            _showTextRepresentation = _showTextRepresentation == true ? false : true;
+            if (_selectedPacketEntry != null)
+                makeDataOutput(cmbEncoding.Text);
+        }
 
-            var row = dataGrid.SelectedItem as PacketEntry;
-            if (row != null && sender != null)
-            {
-                DataEncoding encoding;
-                Enum.TryParse(cmbEncoding.Text, out encoding);
-                dataTextBox.Text = row.DumpData(encoding, showLineNumbers, showTextRepresentation);
-            }
+        void btnShowHead_Click(object sender, RoutedEventArgs e)
+        {
+            _showHeader = _showHeader == true ? false : true;
+            if (_selectedPacketEntry != null)
+                makeDataOutput(cmbEncoding.Text);
         }
 
         void filterTextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
-            Trace.WriteLine(filterTextBox.CaretIndex);
             var lines = filterTextBox.Text.Split("\n");
             var numDigits = Helper.NumDigits(lines.Length);
 
@@ -238,9 +231,11 @@ namespace RedSniff
 
         }
 
-        
-
-        
+        void execRestart()
+        {
+            ExecStop();
+            execStart();
+        }
 
         public void ExecStop()
         {
@@ -254,10 +249,20 @@ namespace RedSniff
             _packetSniffer!.Stop();
         }
 
-        void execRestart()
+        void makeDataOutput(string encodingStr)
         {
-            ExecStop();
-            execStart();
+            if (_selectedPacketEntry == null) return;
+
+            DataEncoding encoding;
+            var success = Enum.TryParse(encodingStr, out encoding);
+            if (!success) return;
+
+            var dataOutput = new StringBuilder();
+            if (_showHeader)
+                dataOutput.Append($"Packet size: {_selectedPacketEntry.TotalSize} bytes\nProtocol:    {_selectedPacketEntry.Protocol}\nFrom:        {_selectedPacketEntry.SrcIp}:{_selectedPacketEntry.SrcPort}\nTo:          {_selectedPacketEntry.DstIp}:{_selectedPacketEntry.DstPort}\nCaptured:    {_selectedPacketEntry.Captured}\n\n\n");
+            dataOutput.Append(_selectedPacketEntry.DumpData(encoding, _showLineNumbers, _showTextRepresentation));
+
+            dataTextBox.Text = dataOutput.ToString();
         }
     }
 }

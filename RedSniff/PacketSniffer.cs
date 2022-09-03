@@ -73,8 +73,6 @@ namespace RedSniff
                 
 
             }
-            
-            
         }
 
         void onReceive(IAsyncResult ar)
@@ -214,6 +212,15 @@ namespace RedSniff
                             ((MainWindow)Application.Current.MainWindow).ListItems.Add(item);
                     }));
                 }
+            }
+            else
+            {
+                // Thread safe adding items
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
+                        ((MainWindow)Application.Current.MainWindow).ListItems.Add(item);
+                }));
             }
             
         }

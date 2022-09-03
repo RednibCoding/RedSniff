@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="heading.png" />
     <None Remove="lineNumber.png" />
     <None Remove="restart.png" />
     <None Remove="start.png" />
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="heading.png" />
     <Resource Include="lineNumber.png" />
     <Resource Include="restart.png" />
     <Resource Include="start.png" />

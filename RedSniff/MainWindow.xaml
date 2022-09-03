@@ -120,17 +120,23 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+                
             </Grid>
-            <Button x:Name="btnShowLineNumbers" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top"
-                    Width="24" Height="24" Margin="0,0,152,0"
+            <Button x:Name="btnShowHeader" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,150,0" VerticalAlignment="Top" Width="22" Height="22" BorderThickness="0">
+                <Button.Background>
+                    <ImageBrush ImageSource="/heading.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="btnShowLineNumbers" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0"
+                    Width="24" Height="24" Margin="0,0,177,0"
                     ToolTip="Toggle line numbers" ToolTipService.InitialShowDelay="1000"
                     >
                 <Button.Background>
                     <ImageBrush ImageSource="/lineNumber.png"/>
                 </Button.Background>
             </Button>
-            <Button Name="btnShowText" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top"
-                    Width="24" Height="24" Margin="0,0,123,0"
+            <Button Name="btnShowText" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0"
+                    Width="22" Height="22" Margin="0,0,123,0"
                     ToolTip="Toggle text representation" ToolTipService.InitialShowDelay="500"
                     >
                 <Button.Background>
@@ -138,7 +144,7 @@
                 </Button.Background>
             </Button>
             <ComboBox x:Name="cmbEncoding" HorizontalAlignment="Right"
-                      Width="100"  Height="24" SelectionChanged="cmbEncoding_Changed"
+                      Width="100"  Height="22" SelectionChanged="cmbEncoding_Changed"
                       Grid.Column="0" VerticalAlignment="Top"
                       ToolTip="Select encoding for the text representation of the bytes" ToolTipService.InitialShowDelay="500" Margin="0,0,18,0">
 
