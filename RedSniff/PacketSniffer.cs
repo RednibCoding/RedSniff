@@ -77,7 +77,7 @@ namespace RedSniff
 
         void onReceive(IAsyncResult ar)
         {
-            var captureTime = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ffff", CultureInfo.InvariantCulture);
+            var captureTime = DateTime.Now.ToString("HH:mm:ss.ffff", CultureInfo.InvariantCulture);
             try
             {
                 int nReceived = _mainSocket!.EndReceive(ar);

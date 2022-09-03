@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -259,7 +260,7 @@ namespace RedSniff
 
             var dataOutput = new StringBuilder();
             if (_showHeader)
-                dataOutput.Append($"Packet size: {_selectedPacketEntry.TotalSize} bytes\nProtocol:    {_selectedPacketEntry.Protocol}\nFrom:        {_selectedPacketEntry.SrcIp}:{_selectedPacketEntry.SrcPort}\nTo:          {_selectedPacketEntry.DstIp}:{_selectedPacketEntry.DstPort}\nCaptured:    {_selectedPacketEntry.Captured}\n\n\n");
+                dataOutput.Append($"Packet size: {_selectedPacketEntry.TotalSize} bytes\nProtocol:    {_selectedPacketEntry.Protocol}\nFrom:        {_selectedPacketEntry.SrcIp}:{_selectedPacketEntry.SrcPort}\nTo:          {_selectedPacketEntry.DstIp}:{_selectedPacketEntry.DstPort}\nCaptured:    {DateTime.Now.ToString("yyyy-MM-dd ", CultureInfo.InvariantCulture)}{_selectedPacketEntry.Captured}\n\n\n");
             dataOutput.Append(_selectedPacketEntry.DumpData(encoding, _showLineNumbers, _showTextRepresentation));
 
             dataTextBox.Text = dataOutput.ToString();
