@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>shark.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="lineNumber.png" />
+    <None Remove="restart.png" />
+    <None Remove="start.png" />
+    <None Remove="stop.png" />
+    <None Remove="text.png" />
+    <None Remove="Windows\shark_big.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="shark.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="lineNumber.png" />
+    <Resource Include="restart.png" />
+    <Resource Include="start.png" />
+    <Resource Include="stop.png" />
+    <Resource Include="text.png" />
+    <Resource Include="Windows\shark_big.png" />
+  </ItemGroup>
+
+</Project>
