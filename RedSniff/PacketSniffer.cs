@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using RedSniff.RiffLang;
+using System.Globalization;
 
 namespace RedSniff
 {
@@ -78,12 +79,13 @@ namespace RedSniff
 
         void onReceive(IAsyncResult ar)
         {
+            var captureTime = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ffff", CultureInfo.InvariantCulture);
             try
             {
                 int nReceived = _mainSocket!.EndReceive(ar);
 
                 if (nReceived > 0)
-                    parseData(_byteData, nReceived);
+                    parseData(_byteData, nReceived, captureTime);
 
                 _byteData = new byte[65535];
 
@@ -102,7 +104,7 @@ namespace RedSniff
 
         }
 
-        void parseData(byte[] byteData, int nReceived)
+        void parseData(byte[] byteData, int nReceived, string captureTime)
         {
 
             // Since all protocol packets are encapsulated in the IP datagram
@@ -153,13 +155,13 @@ namespace RedSniff
                     break;
             }
 
-            makeDataGridRow(ipHeader, tcpHeader!, udpHeader!, dnsHeader!);
+            makeDataGridRow(ipHeader, tcpHeader!, udpHeader!, dnsHeader!, captureTime);
 
 
 
         }
 
-        void makeDataGridRow(IpHeader? ipHeader, TcpHeader? tcpHeader, UdpHeader? udpHeader, DnsHeader? dnsHeader)
+        void makeDataGridRow(IpHeader? ipHeader, TcpHeader? tcpHeader, UdpHeader? udpHeader, DnsHeader? dnsHeader, string captureTime)
         {
             PacketEntry? item = null;
             if (ipHeader == null) return;
@@ -176,6 +178,7 @@ namespace RedSniff
                 item.Flags = tcpHeader.Flags;
                 item.TotalSize = ipHeader.TotalLength;
                 item.MsgSize = tcpHeader.MessageLength;
+                item.Captured = captureTime;
                 item.Data = tcpHeader.Data;
                 _currentRowIndex++;
             } else if (_typesToSniff!.Contains(Protocols.UDP) && udpHeader != null && ipHeader != null)
@@ -189,6 +192,7 @@ namespace RedSniff
                 item.DstPort = udpHeader.DestinationPort;
                 item.MsgSize = udpHeader.MessageLength;
                 item.TotalSize = ipHeader.TotalLength;
+                item.Captured = captureTime;
                 item.Data = udpHeader.Data;
                 _currentRowIndex++;
             }

@@ -18,10 +18,11 @@ namespace RedSniff
         public string DstIp { get; set; } = "";
         public ushort SrcPort { get; set; }
         public ushort DstPort { get; set; }
-        public string HostName { get; set; } = "";
         public string Flags { get; set; } = "";
         public ushort MsgSize { get; set; }
         public ushort TotalSize { get; set; }
+        public string Captured { get; set; } = "";
+
         public byte[] Data = new byte[0];
 
         public string DumpData(DataEncoding encoding, bool showLineNumbers, bool showText)
