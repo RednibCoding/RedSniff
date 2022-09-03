@@ -52,6 +52,7 @@ namespace RedSniff
             btnRestart.Click += btnRestart_Click;
             btnStop.Click += btnStop_Click;
             btnAbout.Click += btnAbout_Click;
+            btnFilterHelp.Click += btnFilterHelp_Click;
 
             btnShowLineNumbers.Click += btnShowLineNumbers_Click;
             btnShowText.Click += btnShowText_Click;
@@ -103,8 +104,12 @@ namespace RedSniff
 
         void btnAbout_Click(object sender, RoutedEventArgs e)
         {
-            var aboutWin = new AboutWindow();
-            aboutWin.Show();
+            new AboutWindow().Show();
+        }
+
+        void btnFilterHelp_Click(object sender, RoutedEventArgs e)
+        {
+            new FilterHelpWindow().Show();
         }
 
         void btnShowLineNumbers_Click(object sender, RoutedEventArgs e)

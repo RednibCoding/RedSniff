@@ -120,7 +120,7 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                
+
             </Grid>
             <Button x:Name="btnShowHeader" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,150,0" VerticalAlignment="Top" Width="22" Height="22" BorderThickness="0">
                 <Button.Background>
@@ -186,6 +186,7 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+                <Button x:Name="btnFilterHelp" Content="?" HorizontalAlignment="Right" Margin="279,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Width="22" Height="22"/>
             </Grid>
         </Grid>
 
