@@ -105,7 +105,9 @@ namespace RedSniff.RiffLang
                         MessageBox.Show($"Error in line {line}: unexpected ip address, expected ip format '0.0.0.0', got  '{words[i]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return null;
                     }
-                    ipStatement.IpAdresses = new();
+
+                    if (ipStatement.IpAdresses == null)
+                        ipStatement.IpAdresses = new();
                     ipStatement.IpAdresses.Add(iPAddress!);
                 }
                 return ipStatement;
@@ -124,7 +126,8 @@ namespace RedSniff.RiffLang
                         return null;
                     }
 
-                    portStatement.Ports = new();
+                    if (portStatement.Ports == null)
+                        portStatement.Ports = new();
                     portStatement.Ports.Add(port);
                 }
                 return portStatement;
