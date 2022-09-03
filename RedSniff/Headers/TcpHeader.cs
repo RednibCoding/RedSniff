@@ -27,10 +27,10 @@ namespace RedSniff.Headers
         private ushort _messageLength;              // Length of the data being carried
         private byte[] _tcpData = new byte[65535];   // Data carried by the TCP packet
 
-        public TcpHeader(byte[] byBuffer, int nReceived)
+        public TcpHeader(byte[] buffer, int nReceived)
         {
            
-            MemoryStream memoryStream = new MemoryStream(byBuffer, 0, nReceived);
+            MemoryStream memoryStream = new MemoryStream(buffer, 0, nReceived);
             BinaryReader binaryReader = new BinaryReader(memoryStream);
 
             // The first sixteen bits contain the source port
@@ -66,7 +66,7 @@ namespace RedSniff.Headers
             _messageLength = (ushort)(nReceived - _headerLength);
 
             // Copy the TCP data into the data buffer
-            Array.Copy(byBuffer, _headerLength, _tcpData, 0, nReceived - _headerLength);
+            Array.Copy(buffer, _headerLength, _tcpData, 0, nReceived - _headerLength);
 
         }
 

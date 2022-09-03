@@ -29,7 +29,7 @@ namespace RedSniff
         {
             var output = new StringBuilder();
             var tmp = new StringBuilder();
-            for (var i = 0; i < TotalSize; i++)
+            for (var i = 0; i < MsgSize; i++)
             {
                 if ((i+1) % 16 == 0)
                 {
@@ -37,7 +37,7 @@ namespace RedSniff
                 }
                 else
                 {
-                    if (i == TotalSize-1 && TotalSize % 16 != 0) // Last line but not filled to 16
+                    if (i == MsgSize - 1 && MsgSize % 16 != 0) // Last line but not filled to 16
                     {
                         processLine(encoding, showLineNumbers, showText, ref tmp, ref output, i);
                     }
@@ -68,7 +68,7 @@ namespace RedSniff
         {
             var rowWidth = 16;
             var xIndex = (index+1) - (index / rowWidth) * rowWidth;
-            var isLastLine = index == TotalSize - 1 && TotalSize % rowWidth != 0 ? true : false;
+            var isLastLine = index == MsgSize - 1 && MsgSize % rowWidth != 0 ? true : false;
             if (showLineNumbers)
             {
                 // Line number
