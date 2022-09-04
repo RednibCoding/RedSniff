@@ -11,10 +11,10 @@ namespace RedSniff.RiffLang
     {
         public List<uint> AllowedSrcPorts { get; }
         public List<uint> AllowedDstPorts { get; }
-        public List<IPAddress> AllowedSrcIps { get; }
-        public List<IPAddress> AllowedDstIps { get; }
+        public List<string> AllowedSrcIps { get; }
+        public List<string> AllowedDstIps { get; }
 
-        public ResolvedFilter(List<uint> allowedSrcPorts, List<uint> allowedDstPorts, List<IPAddress> allowedSrcIps, List<IPAddress> allowedDstIps)
+        public ResolvedFilter(List<uint> allowedSrcPorts, List<uint> allowedDstPorts, List<string> allowedSrcIps, List<string> allowedDstIps)
         {
             AllowedSrcPorts = allowedSrcPorts;
             AllowedDstPorts = allowedDstPorts;

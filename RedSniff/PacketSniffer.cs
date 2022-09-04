@@ -46,7 +46,8 @@ namespace RedSniff
                 // Thread safe clearing the datagrid
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    ((MainWindow)Application.Current.MainWindow).ListItems.Clear();
+                    ((MainWindow)Application.Current.MainWindow).DataGridItems.Clear();
+                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Clear();
                 }));
 
                 // For sniffing the socket to capture the packets has to be a raw socket, with the
@@ -153,13 +154,10 @@ namespace RedSniff
                     break;
             }
 
-            makeDataGridRow(ipHeader, tcpHeader!, udpHeader!, dnsHeader!, captureTime);
-
-
-
+            addToPacketEntries(ipHeader, tcpHeader!, udpHeader!, dnsHeader!, captureTime);
         }
 
-        void makeDataGridRow(IpHeader? ipHeader, TcpHeader? tcpHeader, UdpHeader? udpHeader, DnsHeader? dnsHeader, string captureTime)
+        void addToPacketEntries(IpHeader? ipHeader, TcpHeader? tcpHeader, UdpHeader? udpHeader, DnsHeader? dnsHeader, string captureTime)
         {
             PacketEntry? item = null;
             if (ipHeader == null) return;
@@ -202,14 +200,14 @@ namespace RedSniff
             {
                 if (_filter.AllowedSrcPorts.Contains(item.SrcPort) ||
                     _filter.AllowedDstPorts.Contains(item.DstPort) ||
-                    _filter.AllowedSrcIps.Contains(ipHeader!.SourceAddress) ||
-                    _filter.AllowedDstIps.Contains(ipHeader!.DestinationAddress))
+                    _filter.AllowedSrcIps.Contains(item.SrcIp) ||
+                    _filter.AllowedDstIps.Contains(item.DstIp))
                 {
                     // Thread safe adding items
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
                         if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
-                            ((MainWindow)Application.Current.MainWindow).ListItems.Add(item);
+                            ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(item);
                     }));
                 }
             }
@@ -219,10 +217,17 @@ namespace RedSniff
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
                     if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
-                        ((MainWindow)Application.Current.MainWindow).ListItems.Add(item);
+                        ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(item);
                 }));
             }
-            
+
+            // Thread safe adding items
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
+                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Add(item);
+            }));
+
         }
     }
 }

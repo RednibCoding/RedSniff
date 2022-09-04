@@ -10,12 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="accept.png" />
     <None Remove="heading.png" />
     <None Remove="lineNumber.png" />
     <None Remove="restart.png" />
     <None Remove="start.png" />
     <None Remove="stop.png" />
     <None Remove="text.png" />
+    <None Remove="undo.png" />
     <None Remove="Windows\shark_big.png" />
   </ItemGroup>
 
@@ -24,12 +26,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="accept.png" />
     <Resource Include="heading.png" />
     <Resource Include="lineNumber.png" />
     <Resource Include="restart.png" />
     <Resource Include="start.png" />
     <Resource Include="stop.png" />
     <Resource Include="text.png" />
+    <Resource Include="undo.png" />
     <Resource Include="Windows\shark_big.png" />
   </ItemGroup>
 

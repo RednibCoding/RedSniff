@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -30,7 +31,8 @@ namespace RedSniff
     public partial class MainWindow : Window
     {
         PacketSniffer? _packetSniffer;
-        public ObservableCollection<PacketEntry> ListItems = new ObservableCollection<PacketEntry>();
+        public ObservableCollection<PacketEntry> DataGridItems = new ObservableCollection<PacketEntry>();
+        internal List<PacketEntry> PacketEntries = new List<PacketEntry>();
         bool _showLineNumbers = true;
         bool _showTextRepresentation = true;
         bool _showHeader = true;
@@ -53,12 +55,14 @@ namespace RedSniff
             btnStop.Click += btnStop_Click;
             btnAbout.Click += btnAbout_Click;
             btnFilterHelp.Click += btnFilterHelp_Click;
+            btnApplyFilter.Click += btnApplyFilter_Click;
+            btnResetFilter.Click += btnResetFilter_Click;
 
             btnShowLineNumbers.Click += btnShowLineNumbers_Click;
             btnShowText.Click += btnShowText_Click;
             btnShowHeader.Click += btnShowHead_Click;
 
-            dataGrid.ItemsSource = ListItems;
+            dataGrid.ItemsSource = DataGridItems;
 
             // Set button visuals
             btnStart.IsEnabled = true;
@@ -110,6 +114,43 @@ namespace RedSniff
         void btnFilterHelp_Click(object sender, RoutedEventArgs e)
         {
             new FilterHelpWindow().Show();
+        }
+
+        void btnApplyFilter_Click(object sender, RoutedEventArgs e)
+        {
+            FilterProgram? filterPrg = null;
+            ResolvedFilter? filter = null;
+            if (filterTextBox.Text.Length > 0)
+            {
+                filterPrg = FilterParser.ParseInput(filterTextBox.Text);
+                if (filterPrg == null) return;
+                filter = FilterResolver.ResolveFilter(filterPrg);
+                if (filter == null) return;
+            }
+            else
+            {
+                return;
+            }
+
+            DataGridItems.Clear();
+            foreach (var packetEntry in PacketEntries)
+            {
+                if (filter.AllowedSrcPorts.Contains(packetEntry.SrcPort) ||
+                    filter.AllowedDstPorts.Contains(packetEntry.DstPort) ||
+                    filter.AllowedSrcIps.Contains(packetEntry.SrcIp) ||
+                    filter.AllowedDstIps.Contains(packetEntry.DstIp))
+                {
+                    if (packetEntry != null)
+                        DataGridItems.Add(packetEntry);
+                }
+            }
+        }
+
+        void btnResetFilter_Click(object sender, RoutedEventArgs e)
+        {
+            DataGridItems.Clear();
+            foreach (var packetEntry in PacketEntries)
+                DataGridItems.Add(packetEntry);
         }
 
         void btnShowLineNumbers_Click(object sender, RoutedEventArgs e)
@@ -228,6 +269,10 @@ namespace RedSniff
                 btnStop.Opacity = 1.0;
                 btnRestart.IsEnabled = true;
                 btnRestart.Opacity = 1.0;
+                btnApplyFilter.IsEnabled = false;
+                btnApplyFilter.Opacity = 0.3;
+                btnResetFilter.IsEnabled = false;
+                btnResetFilter.Opacity = 0.3;
             }
             catch (Exception e)
             {
@@ -251,6 +296,10 @@ namespace RedSniff
             btnStop.Opacity = 0.3;
             btnRestart.IsEnabled = false;
             btnRestart.Opacity = 0.3;
+            btnApplyFilter.IsEnabled = true;
+            btnApplyFilter.Opacity = 1.0;
+            btnResetFilter.IsEnabled = true;
+            btnResetFilter.Opacity = 1.0;
 
             _packetSniffer!.Stop();
         }

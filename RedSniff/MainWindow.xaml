@@ -122,7 +122,9 @@
                 </TextBlock>
 
             </Grid>
-            <Button x:Name="btnShowHeader" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,150,0" VerticalAlignment="Top" Width="22" Height="22" BorderThickness="0">
+            <Button x:Name="btnShowHeader" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,150,0" VerticalAlignment="Top"
+                    Width="22" Height="22" BorderThickness="0"
+                    ToolTip="Toggle header" ToolTipService.InitialShowDelay="1000">
                 <Button.Background>
                     <ImageBrush ImageSource="/heading.png"/>
                 </Button.Background>
@@ -186,7 +188,19 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
-                <Button x:Name="btnFilterHelp" Content="?" HorizontalAlignment="Right" Margin="279,0,0,0" VerticalAlignment="Top" Background="Transparent" BorderThickness="0" Width="22" Height="22"/>
+                <Button x:Name="btnFilterHelp" Content="?" HorizontalAlignment="Right" Margin="279,0,0,0"
+                        VerticalAlignment="Top" Background="Transparent" BorderThickness="0"
+                        Width="22" Height="22" ToolTip="Show Filter Help" ToolTipService.InitialShowDelay="500"/>
+                <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,48,5" VerticalAlignment="Bottom" BorderThickness="0" Width="25" Height="25">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/accept.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="btnResetFilter" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0" Width="25" Height="25" Margin="0,0,18,5">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/undo.png"/>
+                    </Button.Background>
+                </Button>
             </Grid>
         </Grid>
 

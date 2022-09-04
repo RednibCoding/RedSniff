@@ -26,7 +26,7 @@ namespace RedSniff.RiffLang
 
     public class IpStatement : Statement
     {
-        public List<IPAddress>? IpAdresses { get; set; }
+        public List<string>? IpAdresses { get; set; }
     }
 
     public class PortStatement : Statement

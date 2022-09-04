@@ -108,7 +108,7 @@ namespace RedSniff.RiffLang
 
                     if (ipStatement.IpAdresses == null)
                         ipStatement.IpAdresses = new();
-                    ipStatement.IpAdresses.Add(iPAddress!);
+                    ipStatement.IpAdresses.Add(words[i]);
                 }
                 return ipStatement;
             }

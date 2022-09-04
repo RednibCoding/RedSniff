@@ -15,8 +15,8 @@ namespace RedSniff.RiffLang
 
             List<uint> allowedSrcPorts = new();
             List<uint> allowedDstPorts = new();
-            List<IPAddress> allowedSrcIps = new();
-            List<IPAddress> allowedDstIps = new();
+            List<string> allowedSrcIps = new();
+            List<string> allowedDstIps = new();
 
             foreach (var statement in program.Statements)
             {
