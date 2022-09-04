@@ -33,7 +33,8 @@ namespace RedSniff
     {
         PacketSniffer? _packetSniffer;
         public ObservableCollection<PacketEntry> DataGridItems = new ObservableCollection<PacketEntry>();
-        internal List<PacketEntry> PacketEntries = new List<PacketEntry>();
+        public List<PacketEntry> PacketEntries = new List<PacketEntry>();
+        public ResolvedFilter? CurrentResolvedFilter = null;
         bool _showLineNumbers = true;
         bool _showTextRepresentation = true;
         bool _showHeader = true;
@@ -133,12 +134,15 @@ namespace RedSniff
                 return;
             }
 
+            CurrentResolvedFilter = resolvedFilter;
+
             DataGridItems.Clear();
             foreach (var packetEntry in PacketEntries)
             {
-                if (FilterInterpreter.IsAllowedPacket(packetEntry, resolvedFilter))
+                if (FilterInterpreter.IsAllowedPacket(packetEntry, CurrentResolvedFilter))
                     if (packetEntry != null) DataGridItems.Add(packetEntry);
             }
+           
         }
 
         void btnResetFilter_Click(object sender, RoutedEventArgs e)
@@ -252,10 +256,8 @@ namespace RedSniff
                     if (filter == null) return;
                 }
 
-                
-
                 _packetSniffer = new PacketSniffer();
-                _packetSniffer.Start(cmbInterfaces.Text, protocolsToSniff, filter);
+                _packetSniffer.Start(cmbInterfaces.Text, protocolsToSniff);
 
                 // Update button visuals
                 btnStart.IsEnabled = false;
@@ -264,10 +266,6 @@ namespace RedSniff
                 btnStop.Opacity = 1.0;
                 btnRestart.IsEnabled = true;
                 btnRestart.Opacity = 1.0;
-                btnApplyFilter.IsEnabled = false;
-                btnApplyFilter.Opacity = 0.3;
-                btnResetFilter.IsEnabled = false;
-                btnResetFilter.Opacity = 0.3;
             }
             catch (Exception e)
             {
@@ -291,10 +289,6 @@ namespace RedSniff
             btnStop.Opacity = 0.3;
             btnRestart.IsEnabled = false;
             btnRestart.Opacity = 0.3;
-            btnApplyFilter.IsEnabled = true;
-            btnApplyFilter.Opacity = 1.0;
-            btnResetFilter.IsEnabled = true;
-            btnResetFilter.Opacity = 1.0;
 
             _packetSniffer!.Stop();
         }

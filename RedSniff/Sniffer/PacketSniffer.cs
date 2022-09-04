@@ -22,7 +22,6 @@ namespace RedSniff.Sniffer
         static byte[] _byteData = new byte[65535];
         static int _currentRowIndex;
         static bool _keepSniffing = false;
-        static ResolvedFilter? _resolvedFilter;
 
         public void Stop()
         {
@@ -32,9 +31,8 @@ namespace RedSniff.Sniffer
             _byteData = new byte[65535];
         }
 
-        public void Start(string interfaceToSniff, List<Protocols> typesToSniff, ResolvedFilter? resolvedFilter)
+        public void Start(string interfaceToSniff, List<Protocols> typesToSniff)
         {
-            _resolvedFilter = resolvedFilter;
             _keepSniffing = true;
             _typesToSniff = typesToSniff;
             _currentRowIndex = 1;
@@ -100,7 +98,6 @@ namespace RedSniff.Sniffer
                 _byteData = new byte[65535];
                 _mainSocket!.BeginReceive(_byteData, 0, _byteData.Length, SocketFlags.None, new AsyncCallback(onReceive), null);
             }
-
         }
 
         void parseData(byte[] byteData, int nReceived, string captureTime)
@@ -195,36 +192,28 @@ namespace RedSniff.Sniffer
 
             if (packetEntry == null) return;
 
-            // Apply filter
-            if (_resolvedFilter != null)
-            {
-                if (FilterInterpreter.IsAllowedPacket(packetEntry, _resolvedFilter))
-                {
-                    // Thread safe adding items
-                    Dispatcher.BeginInvoke((Action)(() =>
-                    {
-                        if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
-                            ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
-                    }));
-                }
-            }
-            else
-            {
-                // Thread safe adding items
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
-                        ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
-                }));
-            }
-
             // Thread safe adding items
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
-                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Add(packetEntry);
-            }));
+                if (((MainWindow)Application.Current.MainWindow) == null) return;
 
+                if (packetEntry != null)
+                {
+                    if (((MainWindow)Application.Current.MainWindow).CurrentResolvedFilter != null)
+                    {
+                        if (FilterInterpreter.IsAllowedPacket(packetEntry, ((MainWindow)Application.Current.MainWindow).CurrentResolvedFilter!))
+                        {
+                            ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
+                        }
+                    }
+                    else
+                    {
+                        ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
+                    }
+
+                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Add(packetEntry);
+                }
+            }));
         }
     }
 }
