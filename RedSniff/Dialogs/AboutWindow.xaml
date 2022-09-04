@@ -10,12 +10,12 @@
     <Grid>
         <Grid Height="200" Width="200" Margin="10,10,130,114">
             <Grid.Background>
-                <ImageBrush ImageSource="/Windows/shark_big.png" />
+                <ImageBrush ImageSource="/Assets/shark_big.png" />
             </Grid.Background>
         </Grid>
         <TextBlock HorizontalAlignment="Left" Margin="137,44,0,0" TextWrapping="Wrap" Text="Red" VerticalAlignment="Top" Height="30" Width="53" FontSize="28" FontFamily="Cascadia Mono SemiBold" Foreground="#FFEFEFEF" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="230,44,0,0" TextWrapping="Wrap" Text="Sniff" VerticalAlignment="Top" Height="31" Width="88" FontSize="28" FontFamily="Cascadia Mono SemiBold" Foreground="#FFFF117E" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="67,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" Height="76" FontFamily="Segoe UI Semibold" FontSize="14"><Run Language="de-de" Text="The Network Game Packet Sniffer."/><LineBreak/><Run Language="de-de" Text="- optimized for Games"/><LineBreak/><Run Language="de-de" Text="- easy to use"/><LineBreak/><Run Language="de-de" Text="- lightweight"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="67,235,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" Height="76" FontFamily="Segoe UI Semibold" FontSize="14"><Run Text="The Network Game Packet Sniffer."/><LineBreak/><Run Text="- optimized for "/><Run Language="de-de" Text="g"/><Run Text="ames"/><LineBreak/><Run Text="- easy to use"/><LineBreak/><Run Text="- lightweight"/></TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="243,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Height="18" FontFamily="Segoe UI Semibold" FontSize="14"><Run Language="de-de"/>
             <Hyperlink NavigateUri="https://github.com/RednibCoding" RequestNavigate="hyperlink_RequestNavigate">
                 by RednibCoding

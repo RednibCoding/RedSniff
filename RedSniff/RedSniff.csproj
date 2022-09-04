@@ -11,6 +11,16 @@
 
   <ItemGroup>
     <None Remove="accept.png" />
+    <None Remove="Assets\accept.png" />
+    <None Remove="Assets\heading.png" />
+    <None Remove="Assets\lineNumber.png" />
+    <None Remove="Assets\restart.png" />
+    <None Remove="Assets\shark_big.png" />
+    <None Remove="Assets\start.png" />
+    <None Remove="Assets\stop.png" />
+    <None Remove="Assets\text.png" />
+    <None Remove="Assets\undo.png" />
+    <None Remove="Dialogs\shark_big.png" />
     <None Remove="heading.png" />
     <None Remove="lineNumber.png" />
     <None Remove="restart.png" />
@@ -21,19 +31,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\shark.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Resource Include="Assets\accept.png" />
     <Resource Include="Assets\heading.png" />
     <Resource Include="Assets\lineNumber.png" />
     <Resource Include="Assets\restart.png" />
+    <Resource Include="Assets\shark_big.png" />
     <Resource Include="Assets\start.png" />
     <Resource Include="Assets\stop.png" />
     <Resource Include="Assets\text.png" />
     <Resource Include="Assets\undo.png" />
-    <Resource Include="Assets\shark_big.png" />
   </ItemGroup>
 
 </Project>
