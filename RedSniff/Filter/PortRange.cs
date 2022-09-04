@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedSniff.RiffLang
+namespace RedSniff.Filter
 {
     public class PortRange
     {

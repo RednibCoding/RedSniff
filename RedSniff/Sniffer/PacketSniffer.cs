@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
-using RedSniff.RiffLang;
+using RedSniff.Filter;
 using System.Globalization;
 
-namespace RedSniff
+namespace RedSniff.Sniffer
 {
 
     internal class PacketSniffer: DependencyObject
@@ -22,7 +22,7 @@ namespace RedSniff
         static byte[] _byteData = new byte[65535];
         static int _currentRowIndex;
         static bool _keepSniffing = false;
-        static ResolvedFilter? _filter;
+        static ResolvedFilter? _resolvedFilter;
 
         public void Stop()
         {
@@ -32,9 +32,9 @@ namespace RedSniff
             _byteData = new byte[65535];
         }
 
-        public void Start(string interfaceToSniff, List<Protocols> typesToSniff, ResolvedFilter? filter)
+        public void Start(string interfaceToSniff, List<Protocols> typesToSniff, ResolvedFilter? resolvedFilter)
         {
-            _filter = filter;
+            _resolvedFilter = resolvedFilter;
             _keepSniffing = true;
             _typesToSniff = typesToSniff;
             _currentRowIndex = 1;
@@ -159,55 +159,52 @@ namespace RedSniff
 
         void addToPacketEntries(IpHeader? ipHeader, TcpHeader? tcpHeader, UdpHeader? udpHeader, DnsHeader? dnsHeader, string captureTime)
         {
-            PacketEntry? item = null;
+            PacketEntry? packetEntry = null;
             if (ipHeader == null) return;
 
             if (_typesToSniff!.Contains(Protocols.TCP) && tcpHeader != null && ipHeader != null)
             {
-                item = new PacketEntry();
-                item.Id = _currentRowIndex;
-                item.Protocol = "TCP";
-                item.SrcIp = ipHeader.SourceAddress.ToString();
-                item.DstIp = ipHeader.DestinationAddress.ToString();
-                item.SrcPort = tcpHeader.SourcePort;
-                item.DstPort = tcpHeader.DestinationPort;
-                item.Flags = tcpHeader.Flags;
-                item.TotalSize = ipHeader.TotalLength;
-                item.MsgSize = tcpHeader.MessageLength;
-                item.Captured = captureTime;
-                item.Data = tcpHeader.Data;
+                packetEntry = new PacketEntry();
+                packetEntry.Id = _currentRowIndex;
+                packetEntry.Protocol = "TCP";
+                packetEntry.SrcIp = ipHeader.SourceAddress.ToString();
+                packetEntry.DstIp = ipHeader.DestinationAddress.ToString();
+                packetEntry.SrcPort = tcpHeader.SourcePort;
+                packetEntry.DstPort = tcpHeader.DestinationPort;
+                packetEntry.Flags = tcpHeader.Flags;
+                packetEntry.TotalSize = ipHeader.TotalLength;
+                packetEntry.MsgSize = tcpHeader.MessageLength;
+                packetEntry.Captured = captureTime;
+                packetEntry.Data = tcpHeader.Data;
                 _currentRowIndex++;
             } else if (_typesToSniff!.Contains(Protocols.UDP) && udpHeader != null && ipHeader != null)
             {
-                item = new PacketEntry();
-                item.Id = _currentRowIndex;
-                item.Protocol = "UDP";
-                item.SrcIp = ipHeader.SourceAddress.ToString();
-                item.DstIp = ipHeader.DestinationAddress.ToString();
-                item.SrcPort = udpHeader.SourcePort;
-                item.DstPort = udpHeader.DestinationPort;
-                item.MsgSize = udpHeader.MessageLength;
-                item.TotalSize = ipHeader.TotalLength;
-                item.Captured = captureTime;
-                item.Data = udpHeader.Data;
+                packetEntry = new PacketEntry();
+                packetEntry.Id = _currentRowIndex;
+                packetEntry.Protocol = "UDP";
+                packetEntry.SrcIp = ipHeader.SourceAddress.ToString();
+                packetEntry.DstIp = ipHeader.DestinationAddress.ToString();
+                packetEntry.SrcPort = udpHeader.SourcePort;
+                packetEntry.DstPort = udpHeader.DestinationPort;
+                packetEntry.MsgSize = udpHeader.MessageLength;
+                packetEntry.TotalSize = ipHeader.TotalLength;
+                packetEntry.Captured = captureTime;
+                packetEntry.Data = udpHeader.Data;
                 _currentRowIndex++;
             }
 
-            if (item == null) return;
+            if (packetEntry == null) return;
 
-            // Apply filterProgram
-            if (_filter != null)
+            // Apply filter
+            if (_resolvedFilter != null)
             {
-                if (_filter.AllowedSrcPorts.Contains(item.SrcPort) ||
-                    _filter.AllowedDstPorts.Contains(item.DstPort) ||
-                    _filter.AllowedSrcIps.Contains(item.SrcIp) ||
-                    _filter.AllowedDstIps.Contains(item.DstIp))
+                if (FilterInterpreter.IsAllowedPacket(packetEntry, _resolvedFilter))
                 {
                     // Thread safe adding items
                     Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
-                            ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(item);
+                        if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
+                            ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
                     }));
                 }
             }
@@ -216,16 +213,16 @@ namespace RedSniff
                 // Thread safe adding items
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
-                        ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(item);
+                    if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
+                        ((MainWindow)Application.Current.MainWindow).DataGridItems.Add(packetEntry);
                 }));
             }
 
             // Thread safe adding items
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                if (item != null && ((MainWindow)Application.Current.MainWindow) != null)
-                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Add(item);
+                if (packetEntry != null && ((MainWindow)Application.Current.MainWindow) != null)
+                    ((MainWindow)Application.Current.MainWindow).PacketEntries.Add(packetEntry);
             }));
 
         }

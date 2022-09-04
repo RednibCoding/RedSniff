@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RedSniff.Windows
+namespace RedSniff.Dialogs
 {
     /// <summary>
     /// Interaction logic for AboutWindow.xaml

@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace RedSniff
 {
-    internal class Helper
+    internal class Helpers
     {
+        // Not the most elegant way to calculate the number of digits of an integer value but certainly the fastes way possible
         public static int NumDigits(long number)
         {
             if (number >= 0)

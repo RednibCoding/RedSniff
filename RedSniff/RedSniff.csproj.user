@@ -9,10 +9,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Windows\AboutWindow.xaml.cs">
+    <Compile Update="Dialogs\AboutWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\FilterHelpWindow.xaml.cs">
+    <Compile Update="Dialogs\FilterHelpWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -20,10 +20,10 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\AboutWindow.xaml">
+    <Page Update="Dialogs\AboutWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\FilterHelpWindow.xaml">
+    <Page Update="Dialogs\FilterHelpWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

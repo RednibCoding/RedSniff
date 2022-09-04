@@ -8,7 +8,7 @@ using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace RedSniff
+namespace RedSniff.Sniffer
 {
     public class PacketEntry
     {

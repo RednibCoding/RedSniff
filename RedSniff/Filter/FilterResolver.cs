@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedSniff.RiffLang
+namespace RedSniff.Filter
 {
     public static class FilterResolver
     {

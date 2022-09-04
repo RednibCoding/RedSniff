@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace RedSniff.RiffLang
+namespace RedSniff.Filter
 {
     public static class FilterParser
     {

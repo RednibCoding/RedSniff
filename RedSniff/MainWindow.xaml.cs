@@ -1,6 +1,7 @@
 ﻿using RedSniff.Headers;
-using RedSniff.RiffLang;
-using RedSniff.Windows;
+using RedSniff.Filter;
+using RedSniff.Dialogs;
+using RedSniff.Sniffer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -119,13 +120,13 @@ namespace RedSniff
         void btnApplyFilter_Click(object sender, RoutedEventArgs e)
         {
             FilterProgram? filterPrg = null;
-            ResolvedFilter? filter = null;
+            ResolvedFilter? resolvedFilter = null;
             if (filterTextBox.Text.Length > 0)
             {
                 filterPrg = FilterParser.ParseInput(filterTextBox.Text);
                 if (filterPrg == null) return;
-                filter = FilterResolver.ResolveFilter(filterPrg);
-                if (filter == null) return;
+                resolvedFilter = FilterResolver.ResolveFilter(filterPrg);
+                if (resolvedFilter == null) return;
             }
             else
             {
@@ -135,14 +136,8 @@ namespace RedSniff
             DataGridItems.Clear();
             foreach (var packetEntry in PacketEntries)
             {
-                if (filter.AllowedSrcPorts.Contains(packetEntry.SrcPort) ||
-                    filter.AllowedDstPorts.Contains(packetEntry.DstPort) ||
-                    filter.AllowedSrcIps.Contains(packetEntry.SrcIp) ||
-                    filter.AllowedDstIps.Contains(packetEntry.DstIp))
-                {
-                    if (packetEntry != null)
-                        DataGridItems.Add(packetEntry);
-                }
+                if (FilterInterpreter.IsAllowedPacket(packetEntry, resolvedFilter))
+                    if (packetEntry != null) DataGridItems.Add(packetEntry);
             }
         }
 
@@ -178,7 +173,7 @@ namespace RedSniff
         void filterTextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
             var lines = filterTextBox.Text.Split("\n");
-            var numDigits = Helper.NumDigits(lines.Length);
+            var numDigits = Helpers.NumDigits(lines.Length);
 
             var lineNumbers = new StringBuilder();
             for (var i = 0; i < lines.Length; i++)

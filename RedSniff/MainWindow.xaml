@@ -19,19 +19,19 @@
             <Button x:Name="btnStart" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32"
                     ToolTip="Start sniffing" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
-                    <ImageBrush ImageSource="/start.png"/>
+                    <ImageBrush ImageSource="/Assets/start.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="btnRestart" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32"
                     ToolTip="Restart sniffing" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
-                    <ImageBrush ImageSource="/restart.png"/>
+                    <ImageBrush ImageSource="/Assets/restart.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="btnStop" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32"
                     ToolTip="Stop sniffing" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
-                    <ImageBrush ImageSource="/stop.png"/>
+                    <ImageBrush ImageSource="/Assets/stop.png"/>
                 </Button.Background>
             </Button>
             <Separator Width="10" Background="#00B6BDC5"/>
@@ -124,17 +124,17 @@
             </Grid>
             <Button x:Name="btnShowHeader" Grid.Column="0" HorizontalAlignment="Right" Margin="0,0,150,0" VerticalAlignment="Top"
                     Width="22" Height="22" BorderThickness="0"
-                    ToolTip="Toggle header" ToolTipService.InitialShowDelay="1000">
+                    ToolTip="Toggle header" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
-                    <ImageBrush ImageSource="/heading.png"/>
+                    <ImageBrush ImageSource="/Assets/heading.png"/>
                 </Button.Background>
             </Button>
             <Button x:Name="btnShowLineNumbers" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0"
                     Width="24" Height="24" Margin="0,0,177,0"
-                    ToolTip="Toggle line numbers" ToolTipService.InitialShowDelay="1000"
+                    ToolTip="Toggle line numbers" ToolTipService.InitialShowDelay="500"
                     >
                 <Button.Background>
-                    <ImageBrush ImageSource="/lineNumber.png"/>
+                    <ImageBrush ImageSource="/Assets/lineNumber.png"/>
                 </Button.Background>
             </Button>
             <Button Name="btnShowText" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0"
@@ -142,7 +142,7 @@
                     ToolTip="Toggle text representation" ToolTipService.InitialShowDelay="500"
                     >
                 <Button.Background>
-                    <ImageBrush ImageSource="/text.png"/>
+                    <ImageBrush ImageSource="/Assets/text.png"/>
                 </Button.Background>
             </Button>
             <ComboBox x:Name="cmbEncoding" HorizontalAlignment="Right"
@@ -191,14 +191,16 @@
                 <Button x:Name="btnFilterHelp" Content="?" HorizontalAlignment="Right" Margin="279,0,0,0"
                         VerticalAlignment="Top" Background="Transparent" BorderThickness="0"
                         Width="22" Height="22" ToolTip="Show Filter Help" ToolTipService.InitialShowDelay="500"/>
-                <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,48,5" VerticalAlignment="Bottom" BorderThickness="0" Width="25" Height="25">
+                <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,48,5"
+                        VerticalAlignment="Bottom" ToolTip="Accept filter" ToolTipService.InitialShowDelay="500" BorderThickness="0" Width="25" Height="25">
                     <Button.Background>
-                        <ImageBrush ImageSource="/accept.png"/>
+                        <ImageBrush ImageSource="/Assets/accept.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnResetFilter" Content="" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderThickness="0" Width="25" Height="25" Margin="0,0,18,5">
+                <Button x:Name="btnResetFilter" Content="" Margin="0,0,18,5" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        BorderThickness="0" Width="25" Height="25" ToolTip="Reset filter" ToolTipService.InitialShowDelay="500" >
                     <Button.Background>
-                        <ImageBrush ImageSource="/undo.png"/>
+                        <ImageBrush ImageSource="/Assets/undo.png"/>
                     </Button.Background>
                 </Button>
             </Grid>
