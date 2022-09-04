@@ -138,7 +138,7 @@
                 </Button.Background>
             </Button>
             <Button Name="btnShowText" HorizontalAlignment="Right" Grid.Column="0" VerticalAlignment="Top" BorderThickness="0"
-                    Width="22" Height="22" Margin="0,0,123,0"
+                    Width="21" Height="21" Margin="0,0,123,0"
                     ToolTip="Toggle text representation" ToolTipService.InitialShowDelay="500"
                     >
                 <Button.Background>
@@ -191,13 +191,13 @@
                 <Button x:Name="btnFilterHelp" Content="?" HorizontalAlignment="Right" Margin="279,0,0,0"
                         VerticalAlignment="Top" Background="Transparent" BorderThickness="0"
                         Width="22" Height="22" ToolTip="Show Filter Help" ToolTipService.InitialShowDelay="500"/>
-                <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,48,5"
+                <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,53,7"
                         VerticalAlignment="Bottom" ToolTip="Accept filter" ToolTipService.InitialShowDelay="500" BorderThickness="0" Width="25" Height="25">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/accept.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="btnResetFilter" Content="" Margin="0,0,18,5" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                <Button x:Name="btnResetFilter" Content="" Margin="0,0,23,7" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                         BorderThickness="0" Width="25" Height="25" ToolTip="Reset filter" ToolTipService.InitialShowDelay="500" >
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/undo.png"/>
