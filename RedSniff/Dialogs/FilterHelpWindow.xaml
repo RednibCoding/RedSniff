@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RedSniff.Dialogs"
         mc:Ignorable="d"
-        Title="Filter Help" Height="580" Width="450"
+        Title="Filter Help" Height="480" Width="450"
         ResizeMode ="NoResize"
         >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="10,10,10,10" TextWrapping="Wrap"><Run Text="1. "/><Run Text="There are 5 keywords:"/><LineBreak/><Run Text="    "/><Run Text="src, dst, both, port, ip"/><LineBreak/><Run/><LineBreak/><Run Text="2. "/><Run Text="The format of a filter "/><Run Text="command "/><Run Text="is as follows:"/><LineBreak/><Run Text="    "/><Run Text="(src | dst | both) (port | ip) (port args | ip args)"/><LineBreak/><Run/><LineBreak/><Run Text="3. "/><Run Text="Only one "/><Run Text="filter "/><Run Text="command per line"/><Run Text="."/><LineBreak/><Run/><LineBreak/><Run Text="4. A comment starts with a # symbol and must be the first character in a line:"/><LineBreak/><Run Text="    # this is a comment and will be ignored"/><LineBreak/><Run/><LineBreak/><Run Text="Example 1:"/><LineBreak/><Run Text="To only show packets on port 9100, 8100 and 9090 all as"/><LineBreak/><Run Text="source and destination ports, the "/><Run Text="filter "/><Run Text="command would be:"/><LineBreak/><Run/><LineBreak/><Run Text="both port 9100 8100 9090"/><LineBreak/><Run/><LineBreak/><Run Text="Example 2:"/><LineBreak/><Run Text="To only show packets comming from"/><LineBreak/><Run Text="ip address 568.432.291"/><Run Text=" (fictional)"/><Run Text=", the command would be:"/><LineBreak/><Run/><LineBreak/><Run Text="src ip "/><Run Text="568.432.291"/><LineBreak/><Run/><LineBreak/><Run Text="Example 3:"/><LineBreak/><Run Text="To combine both command"/><Run Text="s"/><Run Text=", just put them on t"/><Run Text="w"/><Run Text="o seperate lines:"/><LineBreak/><Run/><LineBreak/><Run Text="both port 9100 8100 9090"/><LineBreak/><Run Text="src ip "/><Run Text="568.432.291"/></TextBlock>
+        <TextBox Margin="10,10,10,10" IsReadOnly="True" TextWrapping="Wrap"
+                 BorderThickness="0"
+                 Text="1. There are 5 keywords:&#xA;    src, dst, both, port, ip&#xA;&#xA;2. The format of a filter command is as follows:&#xA;    (src | dst | both) (port | ip) (port args | ip args)&#xA;&#xA;4. A comment starts with a # symbol and must be the first character in a line:&#xA;    # this is a comment and will be ignored&#xA;&#xA;Example 1:&#xA;    To only show packets on port 9100, 8100 and 9090 all as&#xA;    source and destination ports, the filter command would be:&#xA;&#xA;    both port 9100 8100 9090&#xA;&#xA;Example 2:&#xA;    To only show packets comming from&#xA;    ip address 568.432.291 (fictional), the command would be:&#xA;&#xA;    src ip 568.432.291&#xA;&#xA;Example 3:&#xA;    To combine both commands, just put them on two seperate lines:&#xA;&#xA;    both port 9100 8100 9090&#xA;    src ip 568.432.291"></TextBox>
 
     </Grid>
 </Window>

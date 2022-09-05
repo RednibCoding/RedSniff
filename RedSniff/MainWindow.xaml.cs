@@ -142,7 +142,6 @@ namespace RedSniff
                 if (FilterInterpreter.IsAllowedPacket(packetEntry, CurrentResolvedFilter))
                     if (packetEntry != null) DataGridItems.Add(packetEntry);
             }
-           
         }
 
         void btnResetFilter_Click(object sender, RoutedEventArgs e)
