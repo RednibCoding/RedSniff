@@ -25,7 +25,7 @@ namespace RedSniff.Sniffer
 
         public byte[] Data = new byte[0];
 
-        public string DumpData(DataEncoding encoding, bool showLineNumbers, bool showText)
+        public string DumpData(bool showLineNumbers, bool showText)
         {
             var output = new StringBuilder();
             var tmp = new StringBuilder();
@@ -33,13 +33,13 @@ namespace RedSniff.Sniffer
             {
                 if ((i+1) % 16 == 0)
                 {
-                    processLine(encoding, showLineNumbers, showText, ref tmp, ref output, i);
+                    processLine(showLineNumbers, showText, ref tmp, ref output, i);
                 }
                 else
                 {
                     if (i == MsgSize - 1 && MsgSize % 16 != 0) // Last line but not filled to 16
                     {
-                        processLine(encoding, showLineNumbers, showText, ref tmp, ref output, i);
+                        processLine(showLineNumbers, showText, ref tmp, ref output, i);
                     }
                     else if ((i + 1) % 8 == 0)
                     {
@@ -64,7 +64,7 @@ namespace RedSniff.Sniffer
             return output.ToString();
         }
 
-        void processLine(DataEncoding encoding, bool showLineNumbers, bool showText, ref StringBuilder line, ref StringBuilder lines, int index)
+        void processLine(bool showLineNumbers, bool showText, ref StringBuilder line, ref StringBuilder lines, int index)
         {
             var rowWidth = 16;
             var xIndex = (index+1) - (index / rowWidth) * rowWidth;
@@ -83,7 +83,6 @@ namespace RedSniff.Sniffer
                 var lineOutputLen = rowWidth * 2 + 19; // 16 bytes to output * 2 digits + 19 whitespaces inbetween
                 var idx = xIndex == 0 ? rowWidth : xIndex;
                 var numMissingBytes = (rowWidth - idx);
-                Trace.WriteLine($"Num missing bytes: {numMissingBytes}");
                 var numWhiteSpacesNeeded = 0;
                 if (numMissingBytes > 0)
                 {
@@ -100,7 +99,7 @@ namespace RedSniff.Sniffer
                 line.Append($"{new string(' ', numWhiteSpacesNeeded)}");
 
                 var lineBytes = Data[((index + 1) - stepBackCount)..(index + 1)];
-                var strEncoded = bytesToString(lineBytes, encoding);
+                var strEncoded = bytesToString(lineBytes);
 
                 line.Append($"{strEncoded}\n");
 
@@ -117,21 +116,13 @@ namespace RedSniff.Sniffer
             }
         }
 
-        public string bytesToString(byte[] bytes, DataEncoding encoding)
+        public string bytesToString(byte[] bytes)
         {
             StringBuilder tmpString = new StringBuilder();
             for (var i = 0; i < bytes.Length; i++)
             {
-                char chr;
-                switch (encoding)
-                {
-                    case DataEncoding.UTF8:
-                        chr = Convert.ToChar(Encoding.UTF8.GetString(new byte[] { bytes[i] }));
-                        break;
-                    default:
-                        chr = Convert.ToChar(Encoding.ASCII.GetString(new byte[] { bytes[i] }));
-                        break;
-                }
+                char chr = Convert.ToChar(Encoding.ASCII.GetString(new byte[] { bytes[i] }));
+
                 if (char.IsControl(chr) || char.IsWhiteSpace(chr))
                     tmpString.Append(".");
                 else

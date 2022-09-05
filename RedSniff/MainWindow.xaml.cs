@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection.Metadata;
 
 namespace RedSniff
 {
@@ -46,8 +47,6 @@ namespace RedSniff
 
             registerButtonEvents();
             fillCmbInterfaces();
-            fillCmbDataEncoding();
-
         }
 
         void registerButtonEvents()
@@ -82,15 +81,8 @@ namespace RedSniff
             {
                 _selectedPacketEntry = row;
                 if (_selectedPacketEntry != null)
-                    makeDataOutput(cmbEncoding.Text);
+                    makeDataOutput();
             }
-        }
-
-        void cmbEncoding_Changed(object sender, RoutedEventArgs e)
-        {
-            var selectedItemStr = (sender as ComboBox)!.SelectedItem as string;
-            if (selectedItemStr != null && _selectedPacketEntry != null)
-                makeDataOutput(selectedItemStr);
         }
 
         void btnStop_Click(object sender, RoutedEventArgs e)
@@ -155,7 +147,7 @@ namespace RedSniff
         {
             _showLineNumbers = _showLineNumbers == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(cmbEncoding.Text);
+                makeDataOutput();
             
         }
 
@@ -163,14 +155,14 @@ namespace RedSniff
         {
             _showTextRepresentation = _showTextRepresentation == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(cmbEncoding.Text);
+                makeDataOutput();
         }
 
         void btnShowHead_Click(object sender, RoutedEventArgs e)
         {
             _showHeader = _showHeader == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(cmbEncoding.Text);
+                makeDataOutput();
         }
 
         void filterTextBox_OnKeyDown(object sender, KeyEventArgs e)
@@ -189,6 +181,11 @@ namespace RedSniff
             {
                 lineNumbers.Append($"{lines.Length+1}\n");
             }
+        }
+
+        void dataTextBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var _selection = ((TextBox)sender).SelectionStart;
         }
 
 
@@ -214,16 +211,6 @@ namespace RedSniff
                     MessageBox.Show("No network adapters found", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-        }
-
-        void fillCmbDataEncoding()
-        {
-            string[] encodings = Enum.GetNames(typeof(DataEncoding));
-            foreach (var encoding in encodings)
-            {
-                cmbEncoding.Items.Add(encoding);
-            }
-            cmbEncoding.SelectedIndex = 0;
         }
 
         void execStart()
@@ -292,19 +279,15 @@ namespace RedSniff
             _packetSniffer!.Stop();
         }
 
-        void makeDataOutput(string encodingStr)
+        void makeDataOutput()
         {
             if (_selectedPacketEntry == null) return;
-
-            DataEncoding encoding;
-            var success = Enum.TryParse(encodingStr, out encoding);
-            if (!success) return;
 
             var dataOutput = new StringBuilder();
             if (_showHeader)
                 dataOutput.Append($"Packet size: {_selectedPacketEntry.TotalSize} bytes\nProtocol:    {_selectedPacketEntry.Protocol}\nFrom:        {_selectedPacketEntry.SrcIp}:{_selectedPacketEntry.SrcPort}\nTo:          {_selectedPacketEntry.DstIp}:{_selectedPacketEntry.DstPort}\nCaptured:    {DateTime.Now.ToString("yyyy-MM-dd ", CultureInfo.InvariantCulture)}{_selectedPacketEntry.Captured}\n\n\n");
-            dataOutput.Append(_selectedPacketEntry.DumpData(encoding, _showLineNumbers, _showTextRepresentation));
-
+            dataOutput.Append(_selectedPacketEntry.DumpData(_showLineNumbers, _showTextRepresentation));
+;
             dataTextBox.Text = dataOutput.ToString();
         }
     }
