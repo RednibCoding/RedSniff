@@ -61,7 +61,7 @@ namespace RedSniff.Filter
                 var success = Enum.TryParse(words[0], out affType);
                 if (!success)
                 {
-                    MessageBox.Show($"Error in line {line}: unexpected affection type, expected 'both', 'src' or 'dst', got '{words[0]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Error in line {line}: unexpected keyword '{words[0]}', expected 'both', 'src' or 'dst'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return null;
                 };
 
@@ -85,7 +85,7 @@ namespace RedSniff.Filter
                 }
                 else
                 {
-                    MessageBox.Show($"Error in line {line}: unexpected statement, expected 'ip', 'iprange' 'port' or 'portrange', got '{words[1]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show($"Error in line {line}: unexpected statement, expected 'ip' or 'port', got '{words[1]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return null;
                 }
             }
@@ -102,7 +102,7 @@ namespace RedSniff.Filter
                     var success = IPAddress.TryParse(words[i], out iPAddress);
                     if (!success)
                     {
-                        MessageBox.Show($"Error in line {line}: unexpected ip address, expected ip format '0.0.0.0', got  '{words[i]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        MessageBox.Show($"Error in line {line}: unexpected ip address, expected ip format: 'xxx.xxx.xxx.xxx', got  '{words[i]}'", "RedSniff", MessageBoxButton.OK, MessageBoxImage.Warning);
                         return null;
                     }
 

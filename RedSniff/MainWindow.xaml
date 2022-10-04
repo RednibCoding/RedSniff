@@ -56,7 +56,7 @@
             <CheckBox x:Name="udpCheckBox" Content="udp" Height="32" Width="32"
                       ToolTip="Include/Exclude udp messages when sniffing" ToolTipService.InitialShowDelay="500"/>
             <Separator Background="Transparent"/>
-            <Button x:Name="btnAbout" Content="?" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="28"/>
+            <Button x:Name="btnAbout" Content="?" HorizontalAlignment="Right" VerticalAlignment="Center" Width="25" Height="28" ToolTip="Show about window" ToolTipService.InitialShowDelay="500"/>
 
         </ToolBar>
 
@@ -177,7 +177,7 @@
                         VerticalAlignment="Top" Background="Transparent" BorderThickness="0"
                         Width="22" Height="22" ToolTip="Show Filter Help" ToolTipService.InitialShowDelay="500"/>
                 <Button x:Name="btnApplyFilter" Content="" HorizontalAlignment="Right" Margin="0,0,53,7"
-                        VerticalAlignment="Bottom" ToolTip="Accept filter" ToolTipService.InitialShowDelay="500" BorderThickness="0" Width="25" Height="25">
+                        VerticalAlignment="Bottom" ToolTip="Apply filter" ToolTipService.InitialShowDelay="500" BorderThickness="0" Width="25" Height="25">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/accept.png"/>
                     </Button.Background>
