@@ -114,7 +114,7 @@ namespace RedSniff
 
             foreach (var packet in DataGridItems)
             {
-                if (packet != null && packet.MsgSize > 0)
+                if (packet != null)
                     sb.Append(makeDataOutput(packet, _headerVisible, _lineNumbersVisible, _asciiVisible) + "__________________________________________________________________________________\n\n");
             }
 
