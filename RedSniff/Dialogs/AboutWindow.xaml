@@ -21,6 +21,6 @@
                 by RednibCoding
             </Hyperlink>
         </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="274,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Text="v1.0.6"/>
+        <TextBlock HorizontalAlignment="Left" Margin="274,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" Text="v1.0.7" Height="20" Width="44"><LineBreak/><Run/></TextBlock>
     </Grid>
 </Window>

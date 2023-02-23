@@ -24,6 +24,7 @@
     <None Remove="heading.png" />
     <None Remove="lineNumber.png" />
     <None Remove="restart.png" />
+    <None Remove="save.png" />
     <None Remove="start.png" />
     <None Remove="stop.png" />
     <None Remove="text.png" />
@@ -40,6 +41,7 @@
     <Resource Include="Assets\stop.png" />
     <Resource Include="Assets\text.png" />
     <Resource Include="Assets\undo.png" />
+    <Resource Include="Assets\save.png" />
   </ItemGroup>
 
 </Project>

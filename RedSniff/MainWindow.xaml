@@ -16,6 +16,9 @@
         </Grid.RowDefinitions>
 
         <ToolBar x:Name="toolBar" Height="32" VerticalAlignment="Stretch" ToolBarTray.IsLocked="True" >
+            <ToolBar.Background>
+                <ImageBrush/>
+            </ToolBar.Background>
             <Button x:Name="btnStart" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32"
                     ToolTip="Start sniffing" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
@@ -32,6 +35,13 @@
                     ToolTip="Stop sniffing" ToolTipService.InitialShowDelay="500">
                 <Button.Background>
                     <ImageBrush ImageSource="/Assets/stop.png"/>
+                </Button.Background>
+            </Button>
+            <Separator Width="10" Background="#00B6BDC5"/>
+            <Button x:Name="btnSave" HorizontalAlignment="Left" VerticalAlignment="Center" Width="32" Height="32"
+                    ToolTip="Save sniff to file" ToolTipService.InitialShowDelay="500">
+                <Button.Background>
+                    <ImageBrush ImageSource="/Assets/save.png"/>
                 </Button.Background>
             </Button>
             <Separator Width="10" Background="#00B6BDC5"/>

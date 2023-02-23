@@ -24,6 +24,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection.Metadata;
+using Microsoft.Win32;
+using System.IO;
 
 namespace RedSniff
 {
@@ -36,9 +38,9 @@ namespace RedSniff
         public ObservableCollection<PacketEntry> DataGridItems = new ObservableCollection<PacketEntry>();
         public List<PacketEntry> PacketEntries = new List<PacketEntry>();
         public ResolvedFilter? CurrentResolvedFilter = null;
-        bool _showLineNumbers = true;
-        bool _showAscii = true;
-        bool _showHeader = true;
+        bool _lineNumbersVisible = true;
+        bool _asciiVisible = true;
+        bool _headerVisible = true;
         PacketEntry? _selectedPacketEntry;
 
         public MainWindow()
@@ -54,6 +56,7 @@ namespace RedSniff
             btnStart.Click += btnStart_Click;
             btnRestart.Click += btnRestart_Click;
             btnStop.Click += btnStop_Click;
+            btnSave.Click += btnSave_Click;
             btnAbout.Click += btnAbout_Click;
             btnFilterHelp.Click += btnFilterHelp_Click;
             btnApplyFilter.Click += btnApplyFilter_Click;
@@ -72,6 +75,8 @@ namespace RedSniff
             btnStop.Opacity = 0.3;
             btnRestart.IsEnabled = false;
             btnRestart.Opacity = 0.3;
+            btnSave.IsEnabled = false;
+            btnSave.Opacity = 0.3;
         }
 
         void dataGrid_Row_Click(object sender, RoutedEventArgs e)
@@ -81,7 +86,7 @@ namespace RedSniff
             {
                 _selectedPacketEntry = row;
                 if (_selectedPacketEntry != null)
-                    makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
+                    dataTextBox.Text = makeDataOutput(_selectedPacketEntry, _headerVisible, _lineNumbersVisible, _asciiVisible);
             }
         }
 
@@ -98,6 +103,29 @@ namespace RedSniff
         void btnStart_Click(object sender, RoutedEventArgs e)
         {
             execStart();
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var sb = new StringBuilder();
+            foreach (var packet in DataGridItems)
+            {
+                if (packet != null && packet.MsgSize > 0)
+                    sb.Append(makeDataOutput(packet, _headerVisible, _lineNumbersVisible, _asciiVisible) + "__________________________________________________________________________________\n\n");
+            }
+
+            if (sb.Length > 0)
+            {
+                SaveFileDialog dialog = new SaveFileDialog()
+                {
+                    Filter = "Text Files(*.txt)|*.txt"
+                };
+
+                if (dialog.ShowDialog() == true)
+                {
+                    File.WriteAllText(dialog.FileName, sb.ToString());
+                }
+            }
         }
 
         void btnAbout_Click(object sender, RoutedEventArgs e)
@@ -145,24 +173,24 @@ namespace RedSniff
 
         void btnShowLineNumbers_Click(object sender, RoutedEventArgs e)
         {
-            _showLineNumbers = _showLineNumbers == true ? false : true;
+            _lineNumbersVisible = _lineNumbersVisible == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
+                dataTextBox.Text = makeDataOutput(_selectedPacketEntry, _headerVisible, _lineNumbersVisible, _asciiVisible);
 
         }
 
         void btnShowText_Click(object sender, RoutedEventArgs e)
         {
-            _showAscii = _showAscii == true ? false : true;
+            _asciiVisible = _asciiVisible == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
+                dataTextBox.Text = makeDataOutput(_selectedPacketEntry, _headerVisible, _lineNumbersVisible, _asciiVisible);
         }
 
         void btnShowHead_Click(object sender, RoutedEventArgs e)
         {
-            _showHeader = _showHeader == true ? false : true;
+            _headerVisible = _headerVisible == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
+                dataTextBox.Text = makeDataOutput(_selectedPacketEntry, _headerVisible, _lineNumbersVisible, _asciiVisible);
         }
 
         void filterTextBox_OnKeyDown(object sender, KeyEventArgs e)
@@ -252,6 +280,9 @@ namespace RedSniff
                 btnStop.Opacity = 1.0;
                 btnRestart.IsEnabled = true;
                 btnRestart.Opacity = 1.0;
+
+                btnSave.IsEnabled = false;
+                btnSave.Opacity = 0.3;
             }
             catch (Exception e)
             {
@@ -276,19 +307,30 @@ namespace RedSniff
             btnRestart.IsEnabled = false;
             btnRestart.Opacity = 0.3;
 
+            if (dataGrid.Items.Count > 0)
+            {
+                btnSave.IsEnabled = true;
+                btnSave.Opacity = 1.0;
+            }
+            else
+            {
+                btnSave.IsEnabled = false;
+                btnSave.Opacity = 0.3;
+            }
+
             _packetSniffer!.Stop();
         }
 
-        void makeDataOutput(PacketEntry entry, bool showHeader, bool showLineNumbers, bool showAscii)
+        string makeDataOutput(PacketEntry entry, bool showHeader, bool showLineNumbers, bool showAscii)
         {
-            if (entry == null) return;
+            if (entry == null) return "";
 
             var dataOutput = new StringBuilder();
             if (showHeader)
                 dataOutput.Append($"Packet bytes:  {entry.TotalSize}\nMessage bytes: {entry.MsgSize}\nProtocol:      {entry.Protocol}\nFrom:          {entry.SrcIp}:{entry.SrcPort}\nTo:            {entry.DstIp}:{entry.DstPort}\nCaptured:      {DateTime.Now.ToString("yyyy-MM-dd ", CultureInfo.InvariantCulture)}{entry.Captured}\n\n");
             dataOutput.Append(entry.DumpData(showLineNumbers, showAscii));
 ;
-            dataTextBox.Text = dataOutput.ToString();
+            return dataOutput.ToString();
         }
     }
 }
