@@ -37,7 +37,7 @@ namespace RedSniff
         public List<PacketEntry> PacketEntries = new List<PacketEntry>();
         public ResolvedFilter? CurrentResolvedFilter = null;
         bool _showLineNumbers = true;
-        bool _showTextRepresentation = true;
+        bool _showAscii = true;
         bool _showHeader = true;
         PacketEntry? _selectedPacketEntry;
 
@@ -81,7 +81,7 @@ namespace RedSniff
             {
                 _selectedPacketEntry = row;
                 if (_selectedPacketEntry != null)
-                    makeDataOutput();
+                    makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
             }
         }
 
@@ -147,22 +147,22 @@ namespace RedSniff
         {
             _showLineNumbers = _showLineNumbers == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput();
-            
+                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
+
         }
 
         void btnShowText_Click(object sender, RoutedEventArgs e)
         {
-            _showTextRepresentation = _showTextRepresentation == true ? false : true;
+            _showAscii = _showAscii == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput();
+                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
         }
 
         void btnShowHead_Click(object sender, RoutedEventArgs e)
         {
             _showHeader = _showHeader == true ? false : true;
             if (_selectedPacketEntry != null)
-                makeDataOutput();
+                makeDataOutput(_selectedPacketEntry, _showHeader, _showLineNumbers, _showAscii);
         }
 
         void filterTextBox_OnKeyDown(object sender, KeyEventArgs e)
@@ -279,14 +279,14 @@ namespace RedSniff
             _packetSniffer!.Stop();
         }
 
-        void makeDataOutput()
+        void makeDataOutput(PacketEntry entry, bool showHeader, bool showLineNumbers, bool showAscii)
         {
-            if (_selectedPacketEntry == null) return;
+            if (entry == null) return;
 
             var dataOutput = new StringBuilder();
-            if (_showHeader)
-                dataOutput.Append($"Packet size: {_selectedPacketEntry.TotalSize} bytes\nProtocol:    {_selectedPacketEntry.Protocol}\nFrom:        {_selectedPacketEntry.SrcIp}:{_selectedPacketEntry.SrcPort}\nTo:          {_selectedPacketEntry.DstIp}:{_selectedPacketEntry.DstPort}\nCaptured:    {DateTime.Now.ToString("yyyy-MM-dd ", CultureInfo.InvariantCulture)}{_selectedPacketEntry.Captured}\n\n\n");
-            dataOutput.Append(_selectedPacketEntry.DumpData(_showLineNumbers, _showTextRepresentation));
+            if (showHeader)
+                dataOutput.Append($"Packet bytes:  {entry.TotalSize}\nMessage bytes: {entry.MsgSize}\nProtocol:      {entry.Protocol}\nFrom:          {entry.SrcIp}:{entry.SrcPort}\nTo:            {entry.DstIp}:{entry.DstPort}\nCaptured:      {DateTime.Now.ToString("yyyy-MM-dd ", CultureInfo.InvariantCulture)}{entry.Captured}\n\n");
+            dataOutput.Append(entry.DumpData(showLineNumbers, showAscii));
 ;
             dataTextBox.Text = dataOutput.ToString();
         }
