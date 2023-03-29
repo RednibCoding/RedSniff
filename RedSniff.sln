@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.3.32804.467
+VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedSniff", "RedSniff\RedSniff.csproj", "{71B7B161-2ADE-4D8B-9972-70E5F12D5409}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Redsniff", "Redsniff\Redsniff.csproj", "{D387BA50-89A2-4371-B303-BB8632B0AD3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{71B7B161-2ADE-4D8B-9972-70E5F12D5409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71B7B161-2ADE-4D8B-9972-70E5F12D5409}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71B7B161-2ADE-4D8B-9972-70E5F12D5409}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71B7B161-2ADE-4D8B-9972-70E5F12D5409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D387BA50-89A2-4371-B303-BB8632B0AD3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D387BA50-89A2-4371-B303-BB8632B0AD3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D387BA50-89A2-4371-B303-BB8632B0AD3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D387BA50-89A2-4371-B303-BB8632B0AD3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {EC3BC1EF-7FFD-4615-889D-4AB97A755230}
+		SolutionGuid = {4DAAC502-109B-4778-8D98-33F5C64A76A7}
 	EndGlobalSection
 EndGlobal
