@@ -7,6 +7,6 @@ The Network Game Packet Sniffer
 ![](screenshot_001.png)
 
 # Runtime Dependencies
-Redsniff depends on `Npcap` for Windows
+Like Wireshark, Redsniff also depends on `Npcap` for Windows
 
 So in order to use Redsniff you have to download and install `Npcap` for Windows: https://npcap.com/
