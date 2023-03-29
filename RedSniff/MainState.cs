@@ -9,8 +9,11 @@ namespace Redsniff
 {
     internal class MainState
     {
-        public MainForm MainForm { get; set; } = new();
         public string AppName { get; } = "Redsniff";
+        public string AppVersion { get; } = "v2.0.1";
+
+        public MainForm MainForm { get; set; } = new();
+
         public List<PacketEntry> CapturedPackets { get; set; } = new();
         public List<PacketEntry> CapturedPacketsFiltered { get; set; } = new();
         public LibPcapLiveDevice? CurrentCaptureDevice { get; set; }

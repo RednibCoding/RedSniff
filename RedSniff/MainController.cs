@@ -150,10 +150,7 @@ namespace Redsniff
 
             foreach(var packetEntry in Program.MainState.CapturedPackets)
             {
-                if ((Program.MainState.SrcPortFilter == -1 || Program.MainState.SrcPortFilter == packetEntry.SrcPort) &&
-                        (Program.MainState.DstPortFilter == -1 || Program.MainState.DstPortFilter == packetEntry.DstPort) &&
-                        (Program.MainState.SrcIpFilter == string.Empty || Program.MainState.SrcIpFilter == packetEntry.SrcIp) &&
-                        (Program.MainState.DstIpFilter == string.Empty || Program.MainState.DstIpFilter == packetEntry.DstIp))
+                if (doesPacketMatchFilter(packetEntry.SrcIp, packetEntry.DstIp, packetEntry.SrcPort, packetEntry.DstPort))
                 {
                     Program.MainState.CapturedPacketsFiltered.Add(packetEntry);
                     addPacketEntryToDataGrid(packetEntry);
@@ -218,10 +215,7 @@ namespace Redsniff
 
                     Program.MainState.CapturedPackets.Add(packetEntry);
 
-                    if ((Program.MainState.SrcPortFilter == -1 || Program.MainState.SrcPortFilter == packetEntry.SrcPort) &&
-                        (Program.MainState.DstPortFilter == -1 || Program.MainState.DstPortFilter == packetEntry.DstPort) &&
-                        (Program.MainState.SrcIpFilter == string.Empty || Program.MainState.SrcIpFilter == packetEntry.SrcIp) &&
-                        (Program.MainState.DstIpFilter == string.Empty || Program.MainState.DstIpFilter == packetEntry.DstIp))
+                    if (doesPacketMatchFilter(packetEntry.SrcIp, packetEntry.DstIp, packetEntry.SrcPort, packetEntry.DstPort))
                     {
                         Program.MainState.CapturedPacketsFiltered.Add(packetEntry);
 
@@ -252,10 +246,7 @@ namespace Redsniff
 
                     Program.MainState.CapturedPackets.Add(packetEntry);
 
-                    if ((Program.MainState.SrcPortFilter == -1 || Program.MainState.SrcPortFilter == packetEntry.SrcPort) &&
-                        (Program.MainState.DstPortFilter == -1 || Program.MainState.DstPortFilter == packetEntry.DstPort) &&
-                        (Program.MainState.SrcIpFilter == string.Empty || Program.MainState.SrcIpFilter == packetEntry.SrcIp) &&
-                        (Program.MainState.DstIpFilter == string.Empty || Program.MainState.DstIpFilter == packetEntry.DstIp))
+                    if (doesPacketMatchFilter(packetEntry.SrcIp, packetEntry.DstIp, packetEntry.SrcPort, packetEntry.DstPort))
                     {
                         Program.MainState.CapturedPacketsFiltered.Add(packetEntry);
 
@@ -264,7 +255,6 @@ namespace Redsniff
                             addPacketEntryToDataGrid(packetEntry);
                         });
                     }
-
                 }
             }
 
@@ -272,6 +262,44 @@ namespace Redsniff
                 Program.MainState.MainForm.Text = $"{Program.MainState.AppName}  |  Packets: {Program.MainState.CapturedPacketsFiltered.Count} / {Program.MainState.CapturedPackets.Count}";
             });
             
+        }
+
+        bool doesPacketMatchFilter(string filterSourceIp, string filterDestIp, int filterSourcePort, int filterDestPort)
+        {
+            if (string.IsNullOrEmpty(Program.MainState.SrcIpFilter) &&
+                        string.IsNullOrEmpty(Program.MainState.DstIpFilter) &&
+                        Program.MainState.SrcPortFilter == -1 &&
+                        Program.MainState.DstPortFilter == -1)
+            {
+                return true;
+            }
+            else
+            {
+                bool shouldAddPacket = false;
+
+                if (!string.IsNullOrWhiteSpace(Program.MainState.SrcIpFilter) && Program.MainState.SrcIpFilter == filterSourceIp)
+                {
+                    shouldAddPacket = true;
+                }
+                else if (!string.IsNullOrWhiteSpace(Program.MainState.DstIpFilter) && Program.MainState.DstIpFilter == filterDestIp)
+                {
+                    shouldAddPacket = true;
+                }
+                else if (Program.MainState.SrcPortFilter != -1 && Program.MainState.SrcPortFilter == filterSourcePort)
+                {
+                    shouldAddPacket = true;
+                }
+                else if (Program.MainState.DstPortFilter != -1 && Program.MainState.DstPortFilter == filterDestPort)
+                {
+                    shouldAddPacket = true;
+                }
+
+                if (shouldAddPacket)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
         void addPacketEntryToDataGrid(PacketEntry packetEntry)
@@ -307,7 +335,7 @@ namespace Redsniff
                 var success = int.TryParse(srcPortStr, out var srcPortInt);
                 if (!success)
                 {
-                    MessageBox.Show($"{srcPortStr} is not a valid src port", "Invalid Port", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show($"{srcPortStr} is not a valid port", "Invalid Port", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 Program.MainState.SrcPortFilter = srcPortInt;
@@ -322,7 +350,7 @@ namespace Redsniff
                 var success = int.TryParse(dstPortStr, out var dstPortInt);
                 if (!success)
                 {
-                    MessageBox.Show($"{dstPortStr} is not a valid dst port", "Invalid Port", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show($"{dstPortStr} is not a valid port", "Invalid Port", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 Program.MainState.DstPortFilter = dstPortInt;
@@ -332,7 +360,7 @@ namespace Redsniff
             {
                 if (!isValidIpString(srcIpStr))
                 {
-                    MessageBox.Show($"{srcIpStr} is not a valid src ip address", "Invalid Ip Address", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show($"{srcIpStr} is not a valid ip address", "Invalid Ip Address", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 Program.MainState.SrcIpFilter = srcIpStr;
@@ -346,7 +374,7 @@ namespace Redsniff
             {
                 if (!isValidIpString(dstIpStr))
                 {
-                    MessageBox.Show($"{dstIpStr} is not a valid dst ip address", "Invalid Ip Address", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show($"{dstIpStr} is not a valid ip address", "Invalid Ip Address", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return false;
                 }
                 Program.MainState.DstIpFilter = dstIpStr;
@@ -361,6 +389,8 @@ namespace Redsniff
 
         bool isValidIpString(string ipString)
         {
+            string[] ipAddressParts = ipString.Split('.');
+            if (ipAddressParts.Length != 4) return false;
             if (IPAddress.TryParse(ipString, out var ipAddress))
             {
                 return ipAddress.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork;

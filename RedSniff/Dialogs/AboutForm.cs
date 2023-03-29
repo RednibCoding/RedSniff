@@ -16,6 +16,7 @@ namespace Redsniff.Dialogs
         public AboutForm()
         {
             InitializeComponent();
+            label_Version.Text = Program.MainState.AppVersion;
         }
 
         private void linkLabel_Rednib_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
