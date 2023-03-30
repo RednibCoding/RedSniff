@@ -45,6 +45,8 @@ namespace Redsniff
 
             Program.MainState.MainForm.ComboBox_Protocols.SelectedIndex = 0;
 
+            Program.MainState.MainForm.Button_ToggleEmptyPackets.Text = Program.MainState.ListEmptyPackets ? "Empty packets: Yes" : "Empty packets: No";
+
             updateInputStates();
 
         }
@@ -150,6 +152,9 @@ namespace Redsniff
 
             foreach(var packetEntry in Program.MainState.CapturedPackets)
             {
+                if ((packetEntry.Data == null || packetEntry.Data.Length == 0) && !Program.MainState.ListEmptyPackets)
+                    continue;
+
                 if (doesPacketMatchFilter(packetEntry.SrcIp, packetEntry.DstIp, packetEntry.SrcPort, packetEntry.DstPort))
                 {
                     Program.MainState.CapturedPacketsFiltered.Add(packetEntry);
@@ -169,6 +174,9 @@ namespace Redsniff
 
             foreach (var packetEntry in Program.MainState.CapturedPackets)
             {
+                if ((packetEntry.Data == null || packetEntry.Data.Length == 0) && !Program.MainState.ListEmptyPackets)
+                    continue;
+
                 Program.MainState.CapturedPacketsFiltered.Add(packetEntry);
                 addPacketEntryToDataGrid(packetEntry);
             }
@@ -214,6 +222,9 @@ namespace Redsniff
                     packetEntry.Data = tcpPacket.PayloadData;
 
                     Program.MainState.CapturedPackets.Add(packetEntry);
+
+                    if ((packetEntry.Data == null || packetEntry.Data.Length == 0) && !Program.MainState.ListEmptyPackets)
+                        return;
 
                     if (doesPacketMatchFilter(packetEntry.SrcIp, packetEntry.DstIp, packetEntry.SrcPort, packetEntry.DstPort))
                     {
@@ -434,6 +445,8 @@ namespace Redsniff
                 Program.MainState.MainForm.TextBox_DstPort.Enabled = false;
                 Program.MainState.MainForm.TextBox_SrcIp.Enabled = false;
                 Program.MainState.MainForm.TextBox_DstIp.Enabled = false;
+
+                Program.MainState.MainForm.Button_ToggleEmptyPackets.Enabled = false;
             }
             else
             {
@@ -457,6 +470,8 @@ namespace Redsniff
                 Program.MainState.MainForm.TextBox_DstPort.Enabled = true;
                 Program.MainState.MainForm.TextBox_SrcIp.Enabled = true;
                 Program.MainState.MainForm.TextBox_DstIp.Enabled = true;
+
+                Program.MainState.MainForm.Button_ToggleEmptyPackets.Enabled = true;
             }
         }
 

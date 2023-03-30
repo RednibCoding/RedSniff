@@ -62,5 +62,19 @@ namespace Redsniff
         {
             new AboutForm().Show();
         }
+
+        private void Button_ToggleEmptyPackets_Click(object sender, EventArgs e)
+        {
+            Program.MainState.ListEmptyPackets = !Program.MainState.ListEmptyPackets;
+            if (Program.MainState.ListEmptyPackets)
+            {
+                Button_ToggleEmptyPackets.Text = "Empty packets: Yes";
+            }
+            else
+            {
+                Button_ToggleEmptyPackets.Text = "Empty packets: No";
+            }
+            Program.MainController.ApplyFilter();
+        }
     }
 }
