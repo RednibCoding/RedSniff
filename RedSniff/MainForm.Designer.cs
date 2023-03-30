@@ -56,11 +56,14 @@
             this.Button_Apply = new System.Windows.Forms.ToolStripButton();
             this.Button_Reset = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.Button_About = new System.Windows.Forms.ToolStripButton();
             this.Button_ToggleEmptyPackets = new System.Windows.Forms.ToolStripButton();
+            this.Button_Tools = new System.Windows.Forms.ToolStripDropDownButton();
+            this.ToolsMenuItem_About = new System.Windows.Forms.ToolStripMenuItem();
             this.MainSplitContainer = new System.Windows.Forms.SplitContainer();
             this.DataGridView_CapturedPackets = new System.Windows.Forms.DataGridView();
             this.TextBox_PacketData = new System.Windows.Forms.TextBox();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.ToolStripMenuItem_BinaryWriter = new System.Windows.Forms.ToolStripMenuItem();
             this.Toolbar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MainSplitContainer)).BeginInit();
             this.MainSplitContainer.Panel1.SuspendLayout();
@@ -99,8 +102,9 @@
             this.Button_Apply,
             this.Button_Reset,
             this.toolStripSeparator9,
-            this.Button_About,
-            this.Button_ToggleEmptyPackets});
+            this.Button_ToggleEmptyPackets,
+            this.toolStripSeparator10,
+            this.Button_Tools});
             this.Toolbar.Location = new System.Drawing.Point(0, 0);
             this.Toolbar.Name = "Toolbar";
             this.Toolbar.Size = new System.Drawing.Size(1710, 34);
@@ -282,17 +286,6 @@
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 34);
             // 
-            // Button_About
-            // 
-            this.Button_About.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.Button_About.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Button_About.Image = global::Redsniff.Properties.Resources.question_mark;
-            this.Button_About.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Button_About.Name = "Button_About";
-            this.Button_About.Size = new System.Drawing.Size(34, 29);
-            this.Button_About.Text = "About";
-            this.Button_About.Click += new System.EventHandler(this.Button_About_Click);
-            // 
             // Button_ToggleEmptyPackets
             // 
             this.Button_ToggleEmptyPackets.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -303,6 +296,27 @@
             this.Button_ToggleEmptyPackets.Text = "Empty packets";
             this.Button_ToggleEmptyPackets.ToolTipText = "Show/Hide empty packets";
             this.Button_ToggleEmptyPackets.Click += new System.EventHandler(this.Button_ToggleEmptyPackets_Click);
+            // 
+            // Button_Tools
+            // 
+            this.Button_Tools.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.Button_Tools.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Button_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolsMenuItem_About,
+            this.ToolStripMenuItem_BinaryWriter});
+            this.Button_Tools.Image = global::Redsniff.Properties.Resources.gear;
+            this.Button_Tools.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Button_Tools.Name = "Button_Tools";
+            this.Button_Tools.Size = new System.Drawing.Size(42, 29);
+            this.Button_Tools.Text = "Tools";
+            // 
+            // ToolsMenuItem_About
+            // 
+            this.ToolsMenuItem_About.Image = global::Redsniff.Properties.Resources.question_mark;
+            this.ToolsMenuItem_About.Name = "ToolsMenuItem_About";
+            this.ToolsMenuItem_About.Size = new System.Drawing.Size(270, 34);
+            this.ToolsMenuItem_About.Text = "About";
+            this.ToolsMenuItem_About.Click += new System.EventHandler(this.ToolsMenuItem_About_Click);
             // 
             // MainSplitContainer
             // 
@@ -357,6 +371,19 @@
             this.TextBox_PacketData.TabIndex = 0;
             this.TextBox_PacketData.TabStop = false;
             this.TextBox_PacketData.WordWrap = false;
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 34);
+            // 
+            // ToolStripMenuItem_BinaryWriter
+            // 
+            this.ToolStripMenuItem_BinaryWriter.Image = global::Redsniff.Properties.Resources.binary_code;
+            this.ToolStripMenuItem_BinaryWriter.Name = "ToolStripMenuItem_BinaryWriter";
+            this.ToolStripMenuItem_BinaryWriter.Size = new System.Drawing.Size(270, 34);
+            this.ToolStripMenuItem_BinaryWriter.Text = "Binary Writer";
+            this.ToolStripMenuItem_BinaryWriter.Click += new System.EventHandler(this.ToolStripMenuItem_BinaryWriter_Click);
             // 
             // MainForm
             // 
@@ -415,7 +442,10 @@
         public ToolStripButton Button_Save;
         public TextBox TextBox_PacketData;
         private ToolStripSeparator toolStripSeparator9;
-        private ToolStripButton Button_About;
         public ToolStripButton Button_ToggleEmptyPackets;
+        public ToolStripDropDownButton Button_Tools;
+        public ToolStripMenuItem ToolsMenuItem_About;
+        private ToolStripSeparator toolStripSeparator10;
+        private ToolStripMenuItem ToolStripMenuItem_BinaryWriter;
     }
 }

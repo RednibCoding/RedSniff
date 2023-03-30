@@ -58,11 +58,6 @@ namespace Redsniff
             Program.MainController.ClearFilter();
         }
 
-        private void Button_About_Click(object sender, EventArgs e)
-        {
-            new AboutForm().Show();
-        }
-
         private void Button_ToggleEmptyPackets_Click(object sender, EventArgs e)
         {
             Program.MainState.ListEmptyPackets = !Program.MainState.ListEmptyPackets;
@@ -75,6 +70,16 @@ namespace Redsniff
                 Button_ToggleEmptyPackets.Text = "Empty packets: No";
             }
             Program.MainController.ApplyFilter();
+        }
+
+        private void ToolsMenuItem_About_Click(object sender, EventArgs e)
+        {
+            new AboutForm().Show();
+        }
+
+        private void ToolStripMenuItem_BinaryWriter_Click(object sender, EventArgs e)
+        {
+            new BinaryWriterForm().Show();
         }
     }
 }

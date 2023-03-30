@@ -10,7 +10,7 @@ namespace Redsniff
     internal class MainState
     {
         public string AppName { get; } = "Redsniff";
-        public string AppVersion { get; } = "v2.0.2";
+        public string AppVersion { get; } = "v2.0.3";
 
         public MainForm MainForm { get; set; } = new();
 

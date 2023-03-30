@@ -7,6 +7,9 @@
     <Compile Update="Dialogs\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Dialogs\BinaryWriterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

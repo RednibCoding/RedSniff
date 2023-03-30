@@ -11,7 +11,13 @@
 
   <ItemGroup>
     <None Remove="icon.ico" />
+    <None Remove="Resources\accept.png" />
+    <None Remove="Resources\play.png" />
+    <None Remove="Resources\question-mark.png" />
+    <None Remove="Resources\refresh.png" />
+    <None Remove="Resources\save.png" />
     <None Remove="Resources\shark_big.png" />
+    <None Remove="Resources\stop.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +26,13 @@
 
   <ItemGroup>
     <EmbeddedResource Include="icon.ico" />
+    <EmbeddedResource Include="Resources\accept.png" />
+    <EmbeddedResource Include="Resources\play.png" />
+    <EmbeddedResource Include="Resources\question-mark.png" />
+    <EmbeddedResource Include="Resources\refresh.png" />
+    <EmbeddedResource Include="Resources\save.png" />
     <EmbeddedResource Include="Resources\shark_big.png" />
+    <EmbeddedResource Include="Resources\stop.png" />
   </ItemGroup>
 
   <ItemGroup>
