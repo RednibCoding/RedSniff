@@ -447,6 +447,7 @@ namespace Redsniff
                 Program.MainState.MainForm.TextBox_DstIp.Enabled = false;
 
                 Program.MainState.MainForm.Button_ToggleEmptyPackets.Enabled = false;
+                Program.MainState.MainForm.Button_Tools.Enabled = false;
             }
             else
             {
@@ -472,6 +473,7 @@ namespace Redsniff
                 Program.MainState.MainForm.TextBox_DstIp.Enabled = true;
 
                 Program.MainState.MainForm.Button_ToggleEmptyPackets.Enabled = true;
+                Program.MainState.MainForm.Button_Tools.Enabled = true;
             }
         }
 
